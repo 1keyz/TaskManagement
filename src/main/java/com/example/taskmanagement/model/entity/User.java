@@ -4,6 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +18,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends AbstractDateModel{
+public class User extends AbstractDateModel {
     @Column(name = "firs_name")
     private String firstName;
 
@@ -26,5 +33,4 @@ public class User extends AbstractDateModel{
 
     @Column(name = "phone_number")
     private String phoneNumber;
-
 }

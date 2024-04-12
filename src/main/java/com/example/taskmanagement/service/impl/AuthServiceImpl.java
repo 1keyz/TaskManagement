@@ -1,5 +1,6 @@
 package com.example.taskmanagement.service.impl;
 
+import com.example.taskmanagement.config.PasswordEncoderConfig;
 import com.example.taskmanagement.core.utils.exception.types.BusinessException;
 import com.example.taskmanagement.dto.request.LoginRequestDto;
 import com.example.taskmanagement.dto.request.RegisterRequestDto;
@@ -11,19 +12,23 @@ import com.example.taskmanagement.service.mappers.UserMapper;
 import com.example.taskmanagement.service.abstracts.AuthService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
     private UserRepository repository;
     private ModelMapper modelMapper;
+    private PasswordEncoderConfig passwordEncoderConfig;
     @Override
     public RegisterResponse register(RegisterRequestDto requestDto) {
         User user = UserMapper.INSTANCE.UserFromUserRequestDto(requestDto);
-        user.setCreatedAt(LocalDateTime.now());
+        user.setPassword(passwordEncoderConfig.bCryptPasswordEncoder().encode(user.getPassword()));
         repository.save(user);
 
         UserDto userDto = modelMapper.map( repository.save(user),UserDto.class);

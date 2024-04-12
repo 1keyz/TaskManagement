@@ -18,6 +18,8 @@ public class JwtHelper implements TokenHelper{
     @Value("${jwt.key}")
     private String SECRET;
 
+    private final int TOKEN_MINUTE = 60;
+
     public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, email);
@@ -29,7 +31,7 @@ public class JwtHelper implements TokenHelper{
     }
     public String extractUser(String token) { // parametredeki tokendan kullanıcı bilgilerini alarak username ya da email döner
         Claims claims = Jwts
-                .parserBuilder()
+                .parserBuilder() //
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
@@ -46,12 +48,12 @@ public class JwtHelper implements TokenHelper{
                 .getBody();
         return claims.getExpiration();
     }
-    public String createToken(Map<String,Object> claims , String userName) {
+    public String createToken(Map<String,Object> claims , String email) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userName)
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis())) // tokenın oluşturulduğu zaman
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 2 )) // tokenin ne kadar kullanılabilir olacağı
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * TOKEN_MINUTE )) // tokenin ne kadar kullanılabilir olacağı
                 .signWith(getSignKey(), SignatureAlgorithm.HS256) // imza anahtarını belirlediğimiz kısım
                 .compact(); // Jwt'yi string olarak döndürüyor
     }
