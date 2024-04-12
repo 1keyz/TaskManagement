@@ -17,7 +17,7 @@ public class TaskController {
         this.taskServiceImpl = taskServiceImpl;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public TaskDto create(@RequestBody TaskRequestDto requestDto){
        return taskServiceImpl.create(requestDto);
     }
