@@ -3,16 +3,11 @@ package com.example.taskmanagement.model.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @MappedSuperclass
 public abstract class AbstractDateModel extends AbstractIdModel {
     @Column(name = "created_at")
@@ -23,6 +18,10 @@ public abstract class AbstractDateModel extends AbstractIdModel {
     private LocalDateTime deletedAt;
 
 
+    public AbstractDateModel(){
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
 
 
 }
