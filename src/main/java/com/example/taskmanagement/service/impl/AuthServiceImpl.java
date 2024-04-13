@@ -28,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public RegisterResponse register(RegisterRequestDto requestDto) {
         User user = UserMapper.INSTANCE.UserFromUserRequestDto(requestDto);
+      
         user.setPassword(passwordEncoderConfig.bCryptPasswordEncoder().encode(user.getPassword()));
         repository.save(user);
 
