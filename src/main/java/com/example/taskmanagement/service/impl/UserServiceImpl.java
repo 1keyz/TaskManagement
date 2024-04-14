@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() { // project.createdBy'ı bu method ile setliyoruz içerisinden useri bulup dönderiyoruz
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+
+
         Object ob = authentication.getPrincipal();
         if (authentication != null && authentication.isAuthenticated()){
             User user = getByUserWithEmail(ob.toString());
