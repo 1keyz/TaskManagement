@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 @Table(name = "task")
 @AllArgsConstructor
@@ -30,6 +31,7 @@ public class Task extends AbstractDateModel {
     private Project assignedProject;
 
     @Column(name = "assigned_user")
-    private int assignedUser = 1;
+    @OneToOne(cascade = CascadeType.ALL)
+    private User assignedUser;
 
 }

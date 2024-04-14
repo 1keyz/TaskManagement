@@ -43,10 +43,18 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(LoginRequestDto requestDto) {
         User foundUser = repository.findByEmail(requestDto.getEmail());
-        if (!foundUser.getPassword().equals(requestDto.getPassword())){
+
+        boolean passwordMatches = passwordEncoderConfig.bCryptPasswordEncoder().matches(requestDto.getPassword(),foundUser.getPassword());
+        if (passwordMatches){
+            return "login succesful";
+        }
+
+       /* if (!foundUser.getPassword().equals(requestDto.getPassword())){
             return new BusinessException("Email and password not exist").toString();
         }
         return "Login succesful";
+        */
+        return new BusinessException("Email and password not exist").toString();
     }
 
     @Override
