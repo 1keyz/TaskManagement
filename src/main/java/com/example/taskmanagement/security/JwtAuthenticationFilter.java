@@ -2,6 +2,7 @@ package com.example.taskmanagement.security;
 
 import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.security.helper.TokenHelper;
+import com.example.taskmanagement.service.abstracts.ProjectService;
 import com.example.taskmanagement.service.abstracts.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,10 +23,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private  UserDetailsService userDetailsService;
     private  UserService userService;
 
-    public JwtAuthenticationFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService, UserService userService) {
+    private ProjectService projectService;
+
+    public JwtAuthenticationFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService, UserService userService, ProjectService projectService) {
         this.tokenHelper = tokenHelper;
         this.userDetailsService = userDetailsService;
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     @Override
@@ -41,8 +45,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (autHeader != null){
             token = autHeader.substring(7);
         }
-
-
         if (token != null){
             email = tokenHelper.extractUser(token);
             if (email != null){
@@ -56,6 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+
         filterChain.doFilter(request,response);
     }
 }

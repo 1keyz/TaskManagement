@@ -4,4 +4,6 @@ import com.example.taskmanagement.model.entity.User;
 
 public interface UserService {
     User getByUserWithEmail(String email);
+
+    User getCurrentUser();
 }

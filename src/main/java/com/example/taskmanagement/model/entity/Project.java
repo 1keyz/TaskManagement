@@ -1,16 +1,18 @@
 package com.example.taskmanagement.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
 @Table(name = "project")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Project extends AbstractDateModel{
     @Column(name = "name")
     private String name;
@@ -21,9 +23,4 @@ public class Project extends AbstractDateModel{
     @OneToMany(mappedBy = "assignedProject")
     @Column(name = "tasks")
     private List<Task> taskList;
-
-    public Project(){
-        setCreatedAt(LocalDateTime.now());
-        setUpdatedAt(LocalDateTime.now());
-    }
 }

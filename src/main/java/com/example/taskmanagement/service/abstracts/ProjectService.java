@@ -9,6 +9,7 @@ public interface ProjectService {
     ProjectDto createProject(ProjectRequestDto projectRequestDto);
     void deleteProject(long id);
     ProjectDto updateProject(long id , ProjectUpdateRequest updateRequest);
-
     Project findByProjectId(long id);
+
+    void setCreatedBy(long id , long projectId);
 }

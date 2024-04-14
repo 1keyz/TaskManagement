@@ -3,22 +3,18 @@ package com.example.taskmanagement.service.impl;
 import com.example.taskmanagement.core.utils.exception.types.BusinessException;
 import com.example.taskmanagement.dto.request.ProjectRequestDto;
 import com.example.taskmanagement.dto.request.ProjectUpdateRequest;
-import com.example.taskmanagement.dto.request.TaskRequestDto;
 import com.example.taskmanagement.dto.response.ProjectDto;
 import com.example.taskmanagement.model.entity.Project;
-import com.example.taskmanagement.model.entity.Task;
 import com.example.taskmanagement.repository.ProjectRepository;
 import com.example.taskmanagement.service.abstracts.ProjectService;
-import com.example.taskmanagement.service.mappers.ProjectMapper;
+import com.example.taskmanagement.service.abstracts.TaskService;
+import com.example.taskmanagement.service.abstracts.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -26,14 +22,24 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository projectRepository;
     private ModelMapper mapper;
-    private TaskServiceImpl taskService;
+    private TaskService taskService;
+    private UserService userService;
 
 
     @Override
     public ProjectDto createProject(ProjectRequestDto projectRequestDto) {
-        Project project = ProjectMapper.INSTANCE.projectFromProjectRequestDto(projectRequestDto);
-        //project.setCreatedAt(LocalDateTime.now());
+        Project project = Project.builder()
+                .name(projectRequestDto.getName())
+                .createdBy(userService.getCurrentUser().getId())
+                .build();
+        //project.setCreatedBy(userService.getCurrentUser().getId());
         return mapper.map(projectRepository.save(project),ProjectDto.class);
+    }
+
+    @Override
+    public void setCreatedBy(long id , long projectId){
+        Project project = findByProjectId(projectId);
+        project.setCreatedBy(id);
     }
 
 

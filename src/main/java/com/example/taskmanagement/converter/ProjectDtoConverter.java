@@ -3,13 +3,10 @@ package com.example.taskmanagement.converter;
 import com.example.taskmanagement.dto.response.ProjectDto;
 import com.example.taskmanagement.dto.response.TaskDto;
 import com.example.taskmanagement.model.entity.Project;
-import com.example.taskmanagement.model.entity.Task;
 import lombok.AllArgsConstructor;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +28,7 @@ public class ProjectDtoConverter implements Converter<Project, ProjectDto> {
         }
         else projectDto.setTaskDtoList(null);
         projectDto.setName(project.getName());
-        projectDto.setCreatedBy(project.getCreatedBy());
+        //projectDto.setCreatedBy(project.getCreatedBy());
         return projectDto;
     }
 }
