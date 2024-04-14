@@ -31,7 +31,7 @@ public class ProjectDtoConverter implements Converter<Project, ProjectDto> {
         }
         else projectDto.setTaskDtoList(null);
         projectDto.setName(project.getName());
-        projectDto.setCreatedBy(project.getCreatedBy());
+       // projectDto.setCreatedBy(project.getCreatedBy());
         return projectDto;
     }
 }

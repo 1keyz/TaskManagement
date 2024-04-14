@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class ProjectDto {
     private String name;
-    private long createdBy;
+    //private long createdBy;
     private List<TaskDto> taskDtoList;
 }

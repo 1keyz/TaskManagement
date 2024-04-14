@@ -8,6 +8,7 @@ import com.example.taskmanagement.dto.response.ProjectDto;
 import com.example.taskmanagement.model.entity.Project;
 import com.example.taskmanagement.model.entity.Task;
 import com.example.taskmanagement.repository.ProjectRepository;
+import com.example.taskmanagement.service.abstracts.AuthService;
 import com.example.taskmanagement.service.abstracts.ProjectService;
 import com.example.taskmanagement.service.mappers.ProjectMapper;
 import lombok.AllArgsConstructor;
@@ -27,12 +28,15 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository projectRepository;
     private ModelMapper mapper;
     private TaskServiceImpl taskService;
+    private AuthService authService;
 
 
     @Override
     public ProjectDto createProject(ProjectRequestDto projectRequestDto) {
-        Project project = ProjectMapper.INSTANCE.projectFromProjectRequestDto(projectRequestDto);
-        //project.setCreatedAt(LocalDateTime.now());
+        Project project = Project.builder()
+                .name(projectRequestDto.getName())
+                .createdBy(authService.getCurrentUser().getId())
+                .build();
         return mapper.map(projectRepository.save(project),ProjectDto.class);
     }
 
