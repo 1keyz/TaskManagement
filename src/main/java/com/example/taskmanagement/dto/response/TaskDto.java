@@ -18,4 +18,5 @@ public class TaskDto {
     private Enum status;
     private TaskProjectDto taskProjectDto;
     private UserDto assignUser;
+
 }

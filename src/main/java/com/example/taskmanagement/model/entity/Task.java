@@ -27,7 +27,7 @@ public class Task extends AbstractDateModel {
     private Enum status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "assignedProject")
     private Project assignedProject;
 
     //@Column(name = "assigned_user")

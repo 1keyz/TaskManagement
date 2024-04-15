@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,8 +94,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDto> getTaskByProjectId(long projectId) {
-        Project project = projectService.getByProject(projectId);
-        List<TaskDto> taskDtoList =project.getTaskList().stream().map(x -> modelMapper.map(x,TaskDto.class)).collect(Collectors.toList());
+        List<Task> taskList = taskRepository.getTaskByProjectId(projectId);
+        List<TaskDto> taskDtoList = taskList.stream()
+                .map(x -> modelMapper.map(x, TaskDto.class))
+                .collect(Collectors.toList());
         return taskDtoList;
     }
 
