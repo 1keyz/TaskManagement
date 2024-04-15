@@ -49,7 +49,9 @@ public class TaskServiceImpl implements TaskService {
                 .assignedUser(userService.getByUserWithId(requestDto.getUserId()))
                 .build();
         task.setCreatedAt(LocalDateTime.now());
-        task.setAssignedProject(projectService.findByProjectId(requestDto.getProjectId()));
+        if (requestDto.getProjectId() != 0){
+            task.setAssignedProject(projectService.findByProjectId(requestDto.getProjectId()));
+        }
         taskRepository.save(task);
         return modelMapper.map(task,TaskDto.class);
     }

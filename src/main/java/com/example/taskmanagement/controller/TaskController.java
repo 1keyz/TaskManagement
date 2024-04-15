@@ -6,6 +6,8 @@ import com.example.taskmanagement.dto.request.TaskUpdateRequestDto;
 import com.example.taskmanagement.dto.response.TaskDto;
 import com.example.taskmanagement.service.abstracts.TaskService;
 import com.example.taskmanagement.service.impl.TaskServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 public class TaskController {
     private TaskService taskService;
 
+    @Autowired
     public TaskController(TaskServiceImpl taskService) {
         this.taskService = taskService;
     }
@@ -23,9 +26,9 @@ public class TaskController {
     public TaskDto create(@RequestBody TaskRequestDto requestDto){
        return taskService.create(requestDto);
     }
-    @PutMapping("/{id}")
-    public TaskDto update(@PathVariable long id ,@RequestBody TaskUpdateRequestDto requestDto){
-        return taskService.update(id,requestDto);
+    @PutMapping("/{ids}")
+    public TaskDto update(@PathVariable long ids ,@RequestBody TaskUpdateRequestDto requestDto){
+        return taskService.update(ids,requestDto);
     }
 
     @DeleteMapping("/{id}")
@@ -43,8 +46,8 @@ public class TaskController {
         return taskService.getTaskByProjectId(projectId);
     }
 
-    @PutMapping("/{id}")
-    public TaskDto assignUserToTask(@PathVariable long id , long userId){
-        return taskService.assignUserToTask(id,userId);
+    @PutMapping("/{idd}")
+    public TaskDto assignUserToTask(@PathVariable long idd , long userId){
+        return taskService.assignUserToTask(idd,userId);
     }
 }

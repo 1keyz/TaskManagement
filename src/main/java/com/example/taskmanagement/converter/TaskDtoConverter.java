@@ -26,7 +26,9 @@ public class TaskDtoConverter implements Converter<Task, TaskDto> {
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .build();
-        taskDto.setTaskProjectDto(taskProjectDtoConverter.convert(task.getAssignedProject()));
+        if (task.getAssignedProject() != null){
+            taskDto.setTaskProjectDto(taskProjectDtoConverter.convert(task.getAssignedProject()));
+        }
         taskDto.setAssignUser(userDtoConverter.convert(task.getAssignedUser()));
         return taskDto;
     }

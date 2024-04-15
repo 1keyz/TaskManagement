@@ -30,8 +30,9 @@ public class Task extends AbstractDateModel {
     @JoinColumn(name = "project_id")
     private Project assignedProject;
 
-    @Column(name = "assigned_user")
-    @OneToOne(cascade = CascadeType.ALL)
+    //@Column(name = "assigned_user")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_user")
     private User assignedUser;
 
 }

@@ -32,6 +32,6 @@ public class User extends AbstractDateModel {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Task task;
+    @OneToMany(mappedBy = "assignedUser" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Task> tasks;
 }

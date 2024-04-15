@@ -20,7 +20,7 @@ public class MapperConfig {
     @Bean
     public ModelMapper modelMapper(){
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addConverter(new TaskDtoConverter(taskProjectDtoConverter));
+        modelMapper.addConverter(new TaskDtoConverter(taskProjectDtoConverter,userDtoConverter));
         modelMapper.addConverter(new ProjectDtoConverter(taskDtoConverter));
         modelMapper.addConverter(new TaskProjectDtoConverter());
         modelMapper.addConverter(new UserDtoConverter());
