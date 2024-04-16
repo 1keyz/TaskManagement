@@ -1,8 +1,6 @@
 package com.example.taskmanagement.dto.response;
 
-import com.example.taskmanagement.model.entity.Task;
-import com.example.taskmanagement.model.entity.User;
-import com.example.taskmanagement.model.enums.Enum;
+import com.example.taskmanagement.model.enums.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class TaskDto {
     private String name;
     private String description;
-    private Enum status;
+    private TaskStatus status;
     private TaskProjectDto taskProjectDto;
     private UserDto assignUser;
 

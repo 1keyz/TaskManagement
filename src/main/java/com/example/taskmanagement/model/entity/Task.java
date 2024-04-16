@@ -1,13 +1,11 @@
 package com.example.taskmanagement.model.entity;
 
-import com.example.taskmanagement.model.enums.Enum;
-import jakarta.annotation.Nullable;
+import com.example.taskmanagement.model.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 @Table(name = "task")
 @AllArgsConstructor
@@ -24,7 +22,7 @@ public class Task extends AbstractDateModel {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private Enum status;
+    private TaskStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignedProject")
