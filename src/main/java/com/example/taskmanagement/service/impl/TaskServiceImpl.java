@@ -7,7 +7,9 @@ import com.example.taskmanagement.dto.response.TaskDto;
 import com.example.taskmanagement.exception.NotFoundException;
 import com.example.taskmanagement.model.entity.Task;
 import com.example.taskmanagement.repository.TaskRepository;
+import com.example.taskmanagement.service.abstracts.ProjectService;
 import com.example.taskmanagement.service.abstracts.TaskService;
+import com.example.taskmanagement.service.abstracts.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
@@ -15,18 +17,21 @@ import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
-    private final ProjectServiceImpl projectService;
+    private final ProjectService projectService;
     private final ModelMapper modelMapper;
+    private final UserService userService;
 
-    public TaskServiceImpl(TaskRepository taskRepository, @Lazy ProjectServiceImpl projectService, ModelMapper modelMapper) {
+    public TaskServiceImpl(TaskRepository taskRepository, @Lazy ProjectServiceImpl projectService, ModelMapper modelMapper, UserService userService) {
         this.taskRepository = taskRepository;
         this.projectService = projectService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
     public TaskDto addProjectToTask(AssignTaskToProjectRequest request){
@@ -40,9 +45,12 @@ public class TaskServiceImpl implements TaskService {
                 .name(requestDto.getName())
                 .description(requestDto.getDescription())
                 .status(requestDto.getStatus())
+                .assignedUser(userService.getById(requestDto.getUserId()))
                 .build();
         task.setCreatedAt(LocalDateTime.now());
-        task.setAssignedProject(projectService.findByProjectId(requestDto.getProjectId()));
+        if (requestDto.getProjectId() != 0){
+            task.setAssignedProject(projectService.findByProjectId(requestDto.getProjectId()));
+        }
         taskRepository.save(task);
         return modelMapper.map(task,TaskDto.class);
     }
@@ -80,6 +88,22 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getAll() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public List<TaskDto> getTaskByProjectId(long projectId) {
+        List<Task> taskList = taskRepository.getTaskByProjectId(projectId);
+        List<TaskDto> taskDtoList = taskList.stream()
+                .map(x -> modelMapper.map(x, TaskDto.class))
+                .collect(Collectors.toList());
+        return taskDtoList;
+    }
+
+    @Override
+    public TaskDto assignUserToTask(long id ,long userId) {
+        Task task = taskRepository.getById(id);
+        task.setAssignedUser(userService.getById(userId));
+        return modelMapper.map(task,TaskDto.class);
     }
 
     protected Task findByTaskWithId(long id){

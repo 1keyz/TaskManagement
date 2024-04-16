@@ -16,5 +16,5 @@ public class TaskRequestDto {
     private Enum status;
     @NotBlank(message = "Proje ataması olmadan task kaydedilemez!")
     private long projectId;
-
+    private long userId;
 }

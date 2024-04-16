@@ -1,8 +1,6 @@
 package com.example.taskmanagement.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,4 +31,7 @@ public class User extends AbstractDateModel {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "assignedUser" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Task> tasks;
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 @Table(name = "task")
 @AllArgsConstructor
@@ -26,10 +27,12 @@ public class Task extends AbstractDateModel {
     private Enum status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "assignedProject")
     private Project assignedProject;
 
-    @Column(name = "assigned_user")
-    private int assignedUser = 1;
+    //@Column(name = "assigned_user")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_user")
+    private User assignedUser;
 
 }

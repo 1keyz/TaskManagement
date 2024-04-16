@@ -33,4 +33,9 @@ public class ProjectController {
     public ProjectDto updateProject(@RequestParam long id , @RequestBody ProjectUpdateRequest updateRequest) {
        return projectService.updateProject(id,updateRequest);
     }
+
+    @GetMapping("/{id}")
+    public ProjectDto getProjectById(@PathVariable long id){
+        return projectService.getProjectById(id);
+    }
 }

@@ -55,6 +55,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectDto getProjectById(long id) {
+        return mapper.map(projectRepository.getById(id),ProjectDto.class);
+    }
+
+    @Override
+    public Project getByProject(long id){
+        Project project = projectRepository.getById(id);
+        return project;
+    }
+
+    @Override
     public Project findByProjectId(long id) {
         return projectRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("project not found"));

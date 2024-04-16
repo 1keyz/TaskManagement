@@ -1,6 +1,7 @@
 package com.example.taskmanagement.converter;
 
 import com.example.taskmanagement.dto.response.TaskDto;
+import com.example.taskmanagement.dto.response.UserDto;
 import com.example.taskmanagement.model.entity.Task;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class TaskDtoConverter implements Converter<Task, TaskDto> {
 
     private TaskProjectDtoConverter taskProjectDtoConverter;
+    private UserDtoConverter userDtoConverter;
 
     @Override
     public TaskDto convert(MappingContext<Task, TaskDto> context) {
@@ -24,7 +26,10 @@ public class TaskDtoConverter implements Converter<Task, TaskDto> {
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .build();
-        taskDto.setTaskProjectDto(taskProjectDtoConverter.convert(task.getAssignedProject()));
+        if (task.getAssignedProject() != null){
+            taskDto.setTaskProjectDto(taskProjectDtoConverter.convert(task.getAssignedProject()));
+        }
+        taskDto.setAssignUser(userDtoConverter.convert(task.getAssignedUser()));
         return taskDto;
     }
 }
