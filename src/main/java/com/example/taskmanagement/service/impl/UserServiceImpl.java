@@ -15,16 +15,16 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper mapper;
     
     @Override
-    public User getByUserWithEmail(String email) {
+    public User getByEmail(String email) {
         return repository.findByEmail(email);
     }
 
-    public User getByUserWithId(long id){
+    public User getById(long id){
         return repository.getById(id);
     }
 
     @Override
-    public UserDto getUserById(long id) {
+    public UserDto getUserDetailsById(long id) {
         return mapper.map(repository.getById(id),UserDto.class);
     }
 }

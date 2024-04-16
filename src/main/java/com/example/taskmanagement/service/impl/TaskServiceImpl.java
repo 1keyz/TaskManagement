@@ -5,7 +5,6 @@ import com.example.taskmanagement.dto.request.TaskRequestDto;
 import com.example.taskmanagement.dto.request.TaskUpdateRequestDto;
 import com.example.taskmanagement.dto.response.TaskDto;
 import com.example.taskmanagement.exception.NotFoundException;
-import com.example.taskmanagement.model.entity.Project;
 import com.example.taskmanagement.model.entity.Task;
 import com.example.taskmanagement.repository.TaskRepository;
 import com.example.taskmanagement.service.abstracts.ProjectService;
@@ -17,7 +16,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +45,7 @@ public class TaskServiceImpl implements TaskService {
                 .name(requestDto.getName())
                 .description(requestDto.getDescription())
                 .status(requestDto.getStatus())
-                .assignedUser(userService.getByUserWithId(requestDto.getUserId()))
+                .assignedUser(userService.getById(requestDto.getUserId()))
                 .build();
         task.setCreatedAt(LocalDateTime.now());
         if (requestDto.getProjectId() != 0){
@@ -104,7 +102,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDto assignUserToTask(long id ,long userId) {
         Task task = taskRepository.getById(id);
-        task.setAssignedUser(userService.getByUserWithId(userId));
+        task.setAssignedUser(userService.getById(userId));
         return modelMapper.map(task,TaskDto.class);
     }
 

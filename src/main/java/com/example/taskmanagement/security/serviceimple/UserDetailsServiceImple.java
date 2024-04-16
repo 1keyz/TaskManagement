@@ -19,7 +19,7 @@ public class UserDetailsServiceImple implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.getByUserWithEmail(username);
+        User user = userService.getByEmail(username);
         return new CustomerUserDetails(user);
     }
 }

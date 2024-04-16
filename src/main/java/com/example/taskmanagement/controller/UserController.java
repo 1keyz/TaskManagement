@@ -1,6 +1,5 @@
 package com.example.taskmanagement.controller;
 
-import com.example.taskmanagement.dto.response.ProjectDto;
 import com.example.taskmanagement.dto.response.UserDto;
 import com.example.taskmanagement.service.abstracts.UserService;
 import lombok.AllArgsConstructor;
@@ -17,6 +16,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable long id){
-        return userService.getUserById(id);
+        return userService.getUserDetailsById(id);
     }
 }

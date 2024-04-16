@@ -15,12 +15,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -62,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object ob = authentication.getPrincipal();
         if (authentication != null && authentication.isAuthenticated()){
-            User user = userService.getByUserWithEmail(ob.toString());
+            User user = userService.getByEmail(ob.toString());
             return user;
         }
         return null;
