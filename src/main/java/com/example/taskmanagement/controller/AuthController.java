@@ -8,6 +8,7 @@ import com.example.taskmanagement.security.helper.JwtHelper;
 import com.example.taskmanagement.security.helper.TokenHelper;
 import com.example.taskmanagement.service.abstracts.AuthService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,13 +24,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDto requestDto) {
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto) {
         String token = tokenHelper.generateToken(requestDto.getEmail());
-        return service.login(requestDto);
+        return ResponseEntity.ok(service.login(requestDto));
     }
 
     @PostMapping("/token")
-    public String generateToken(@RequestBody AuthRequest request){
-        return tokenHelper.generateToken(request.getEmail());
+    public ResponseEntity<String> generateToken(@RequestBody AuthRequest request){
+        return ResponseEntity.ok(tokenHelper.generateToken(request.getEmail()));
     }
 }

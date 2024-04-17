@@ -2,18 +2,16 @@ package com.example.taskmanagement.service.impl;
 
 import com.example.taskmanagement.dto.request.VerifyUserRequest;
 import com.example.taskmanagement.dto.response.VerifyUserResponse;
-import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.model.entity.UserVerification;
 import com.example.taskmanagement.repository.UserVerificationRepository;
 import com.example.taskmanagement.service.abstracts.UserVerificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
+import java.util.Stack;
 
 @Service
 @AllArgsConstructor
@@ -32,29 +30,31 @@ public class UserVerificationServiceImpl implements UserVerificationService {
     @Override
     public boolean verify(VerifyUserRequest request) {
         UserVerification userVerification = repository.
-                userVerificationIsExist(request.getUserId(),request.getCode()).orElse(null);
+                getUserVerificationByCodeAndUserId(request.getUserId(),request.getCode()).orElse(null);
 
-        VerifyUserResponse response = new VerifyUserResponse();
+        if (userVerification == null) return false;
 
-        if (userVerification ==null) userVerification.setVerified(false);
-
-        if (!request.getCode().equals(userVerification.getCode())) {
-            userVerification.setVerified(false);
-        }
-        else if (userVerification.getCode().equals(request.getCode())){
-            if (new Date(System.currentTimeMillis() + 1000 * 60 ).after(userVerification.getExpirationTime())){
-                userVerification.setVerified(false);
-                response.setVerify(userVerification.isVerified());
-            }
-            else {
+        else {
+            String lastCode = findLastCode(repository.getUserVerificationAllCodeWithUserId(userVerification.getUserId()));
+            if (!lastCode.equals(request.getCode())) return false;
+            else if (lastCode.equals(request.getCode()) &&
+                    new Date(System.currentTimeMillis() + 1000 * 60 ).after(userVerification.getExpirationTime())) {
                 userVerification.setVerified(true);
+                repository.save(userVerification);
+                return true;
             }
         }
-        repository.save(userVerification);
-        response.setVerify(userVerification.isVerified());
-        return response.isVerify();
+        return true;
     }
 
+    private String findLastCode(List<String> codes){
+        Stack<String> codeStack = new Stack<>();
+
+        for (String str : codes){
+            codeStack.add(str);
+        }
+        return codeStack.pop();
+    }
     private String randomCode(){
         String rndmStr = "ABCDEFGHIJKLMNOPRSQabcdefghijklmnoprqs123456789";
         StringBuilder code = new StringBuilder();

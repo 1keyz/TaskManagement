@@ -21,5 +21,5 @@ public class UserVerification extends AbstractDateModel {
     private int userId;
     private String code;
     private Date expirationTime;
-    private boolean verified;
+    private boolean verified = false;
 }

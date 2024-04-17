@@ -8,6 +8,7 @@ import com.example.taskmanagement.service.impl.ProjectServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,8 +20,8 @@ public class ProjectController {
 
 
     @PostMapping("/create")
-    public ProjectDto createProject(@RequestBody ProjectRequestDto projectRequestDto) {
-       return projectService.createProject(projectRequestDto);
+    public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectRequestDto projectRequestDto) {
+       return ResponseEntity.ok(projectService.createProject(projectRequestDto));
     }
 
     @DeleteMapping("/{id}")
@@ -30,12 +31,12 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ProjectDto updateProject(@RequestParam long id , @RequestBody ProjectUpdateRequest updateRequest) {
-       return projectService.updateProject(id,updateRequest);
+    public ResponseEntity<ProjectDto> updateProject(@RequestParam long id , @RequestBody ProjectUpdateRequest updateRequest) {
+       return ResponseEntity.ok(projectService.updateProject(id,updateRequest));
     }
 
     @GetMapping("/{id}")
-    public ProjectDto getProjectById(@PathVariable long id){
-        return projectService.getProjectById(id);
+    public ResponseEntity<ProjectDto> getProjectById(@PathVariable long id){
+        return ResponseEntity.ok(projectService.getProjectById(id));
     }
 }
