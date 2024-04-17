@@ -14,7 +14,7 @@ public interface UserVerificationRepository extends JpaRepository<UserVerificati
             " and user_verifications.code = :code" , nativeQuery = true)
     Optional<UserVerification> getUserVerificationByCodeAndUserId(@Param(value = "userId") int userId , @Param(value = "code") String code);
 
-
-    @Query(value = "SELECT code FROM user_verifications WHERE user_verifications.user_id = :userId" , nativeQuery = true)
-    List<String> getUserVerificationAllCodeWithUserId(@Param(value = "userId") int userId);
+    @Query(value = "SELECT code FROM public.user_verifications where user_id = :userId \n" +
+            "ORDER BY user_verifications.created_at DESC LIMIT 1" , nativeQuery = true)
+    String getUserVerificationLastCodeByUserId(@Param(value = "userId") int userId);
 }

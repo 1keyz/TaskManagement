@@ -35,7 +35,8 @@ public class UserVerificationServiceImpl implements UserVerificationService {
         if (userVerification == null) return false;
 
         else {
-            String lastCode = findLastCode(repository.getUserVerificationAllCodeWithUserId(userVerification.getUserId()));
+            String lastCode = repository.getUserVerificationLastCodeByUserId(request.getUserId());
+
             if (!lastCode.equals(request.getCode())) return false;
             else if (lastCode.equals(request.getCode()) &&
                     new Date(System.currentTimeMillis() + 1000 * 60 ).after(userVerification.getExpirationTime())) {
@@ -44,17 +45,11 @@ public class UserVerificationServiceImpl implements UserVerificationService {
                 return true;
             }
         }
+
         return true;
     }
 
-    private String findLastCode(List<String> codes){
-        Stack<String> codeStack = new Stack<>();
 
-        for (String str : codes){
-            codeStack.add(str);
-        }
-        return codeStack.pop();
-    }
     private String randomCode(){
         String rndmStr = "ABCDEFGHIJKLMNOPRSQabcdefghijklmnoprqs123456789";
         StringBuilder code = new StringBuilder();
