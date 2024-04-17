@@ -29,19 +29,18 @@ public class UserVerificationServiceImpl implements UserVerificationService {
 
     @Override
     public boolean verify(VerifyUserRequest request) {
-        UserVerification userVerification = repository.
-                getUserVerificationByCodeAndUserId(request.getUserId(),request.getCode()).orElse(null);
+        UserVerification lastUserVerification = repository.getUserVerificationLastUserByUserId(request.getUserId());
 
-        if (userVerification == null) return false;
+        if (lastUserVerification == null) return false;
 
         else {
-            String lastCode = repository.getUserVerificationLastCodeByUserId(request.getUserId());
 
-            if (!lastCode.equals(request.getCode())) return false;
-            else if (lastCode.equals(request.getCode()) &&
-                    new Date(System.currentTimeMillis() + 1000 * 60 ).after(userVerification.getExpirationTime())) {
-                userVerification.setVerified(true);
-                repository.save(userVerification);
+
+            if (!lastUserVerification.getCode().equals(request.getCode())) return false;
+            else if (lastUserVerification.getCode().equals(request.getCode()) &&
+                    new Date(System.currentTimeMillis() + 1000 * 60 ).after(lastUserVerification.getExpirationTime())) {
+                lastUserVerification.setVerified(true);
+                repository.save(lastUserVerification);
                 return true;
             }
         }
