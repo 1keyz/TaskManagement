@@ -4,6 +4,7 @@ import com.example.taskmanagement.config.PasswordEncoderConfig;
 import com.example.taskmanagement.core.utils.exception.types.BusinessException;
 import com.example.taskmanagement.dto.request.LoginRequestDto;
 import com.example.taskmanagement.dto.request.RegisterRequestDto;
+import com.example.taskmanagement.dto.response.LoginDto;
 import com.example.taskmanagement.dto.response.RegisterResponse;
 import com.example.taskmanagement.dto.response.UserDto;
 import com.example.taskmanagement.model.entity.User;
@@ -36,20 +37,18 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginRequestDto requestDto) {
+    public LoginDto login(LoginRequestDto requestDto) {
         User foundUser = repository.findByEmail(requestDto.getEmail());
 
         boolean passwordMatches = passwordEncoderConfig.bCryptPasswordEncoder().matches(requestDto.getPassword(),foundUser.getPassword());
-        if (passwordMatches){
-            return "login succesful";
+        if (!passwordMatches){
+            throw new BusinessException("Giriş başarısız");
         }
-
-       /* if (!foundUser.getPassword().equals(requestDto.getPassword())){
-            return new BusinessException("Email and password not exist").toString();
-        }
-        return "Login succesful";
-        */
-        return new BusinessException("Email and password not exist").toString();
+        LoginDto loginDto = LoginDto.builder()
+                .email(requestDto.getEmail())
+                .message("login succesful")
+                .build();
+        return loginDto;
     }
 
     @Override

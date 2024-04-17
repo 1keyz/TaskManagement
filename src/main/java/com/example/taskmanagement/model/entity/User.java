@@ -1,5 +1,6 @@
 package com.example.taskmanagement.model.entity;
 
+import com.example.taskmanagement.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,4 +35,8 @@ public class User extends AbstractDateModel {
 
     @OneToMany(mappedBy = "assignedUser" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Task> tasks;
+
+    @Column(name = "user_status")
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
 }

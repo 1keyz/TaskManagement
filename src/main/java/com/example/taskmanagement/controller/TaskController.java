@@ -8,6 +8,7 @@ import com.example.taskmanagement.service.abstracts.TaskService;
 import com.example.taskmanagement.service.impl.TaskServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +24,12 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public TaskDto create(@RequestBody TaskRequestDto requestDto){
-       return taskService.create(requestDto);
+    public ResponseEntity<TaskDto> create(@RequestBody TaskRequestDto requestDto){
+       return ResponseEntity.ok(taskService.create(requestDto));
     }
     @PutMapping("/{ids}")
-    public TaskDto update(@PathVariable long ids ,@RequestBody TaskUpdateRequestDto requestDto){
-        return taskService.update(ids,requestDto);
+    public ResponseEntity<TaskDto> update(@PathVariable long ids ,@RequestBody TaskUpdateRequestDto requestDto){
+        return ResponseEntity.ok(taskService.update(ids,requestDto));
     }
 
     @DeleteMapping("/{id}")
@@ -37,17 +38,17 @@ public class TaskController {
     }
 
     @PutMapping("/assign")
-    public TaskDto addProjectToTask(@RequestBody AssignTaskToProjectRequest request){
-        return taskService.addProjectToTask(request);
+    public ResponseEntity<TaskDto> addProjectToTask(@RequestBody AssignTaskToProjectRequest request){
+        return ResponseEntity.ok(taskService.addProjectToTask(request));
     }
 
     @GetMapping("/{projectId}")
-    public List<TaskDto> getTaskByProjectId(@PathVariable long projectId){
-        return taskService.getTaskByProjectId(projectId);
+    public ResponseEntity<List<TaskDto>> getTaskByProjectId(@PathVariable long projectId){
+        return ResponseEntity.ok(taskService.getTaskByProjectId(projectId));
     }
 
     @PutMapping("/{idd}")
-    public TaskDto assignUserToTask(@PathVariable long idd , long userId){
-        return taskService.assignUserToTask(idd,userId);
+    public ResponseEntity<TaskDto> assignUserToTask(@PathVariable long idd , long userId){
+        return ResponseEntity.ok(taskService.assignUserToTask(idd,userId));
     }
 }
