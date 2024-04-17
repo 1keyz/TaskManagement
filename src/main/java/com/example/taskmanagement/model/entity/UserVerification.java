@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -20,6 +21,6 @@ import java.util.Date;
 public class UserVerification extends AbstractDateModel {
     private int userId;
     private String code;
-    private Date expirationTime;
+    private LocalDateTime expirationTime;
     private boolean verified = false;
 }

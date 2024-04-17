@@ -6,8 +6,11 @@ import com.example.taskmanagement.model.entity.UserVerification;
 import com.example.taskmanagement.repository.UserVerificationRepository;
 import com.example.taskmanagement.service.abstracts.UserVerificationService;
 import lombok.AllArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +25,7 @@ public class UserVerificationServiceImpl implements UserVerificationService {
         UserVerification userVerification = new UserVerification();
         userVerification.setUserId(userId);
         userVerification.setCode(randomCode());
-        userVerification.setExpirationTime(new Date(System.currentTimeMillis() + 1000 * 60 * 6));
+        userVerification.setExpirationTime(LocalDateTime.now().plus(6, ChronoUnit.MINUTES));
         repository.save(userVerification);
         return userVerification.getCode();
     }
@@ -33,18 +36,13 @@ public class UserVerificationServiceImpl implements UserVerificationService {
 
         if (lastUserVerification == null) return false;
 
-        else {
+        if (!lastUserVerification.getCode().equals(request.getCode())) return false;
 
+        if (LocalDateTime.now().isBefore(lastUserVerification.getExpirationTime())) return false;
 
-            if (!lastUserVerification.getCode().equals(request.getCode())) return false;
-            else if (lastUserVerification.getCode().equals(request.getCode()) &&
-                    new Date(System.currentTimeMillis() + 1000 * 60 ).after(lastUserVerification.getExpirationTime())) {
-                lastUserVerification.setVerified(true);
-                repository.save(lastUserVerification);
-                return true;
-            }
-        }
-
+        lastUserVerification.setVerified(true);
+        lastUserVerification.setUpdatedAt(LocalDateTime.now());
+        repository.save(lastUserVerification);
         return true;
     }
 
