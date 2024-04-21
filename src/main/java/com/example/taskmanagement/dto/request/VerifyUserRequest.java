@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class VerifyUserRequest {
-    private int userId;
+    private long userId;
     private String code;
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">Template for HTML email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    Hello user your code , <span th:text="${codes}"></span>!
+</p>
+
+<p>
+    You have been successfully create to the token <b>YanbalsCoding</b> on
+    <span th:text="${tokenCreateDate}">28-12-2012</span>
+</p>
+
+<p>
+    this is the end date of the generated code , <span th:text="${tokenExpirationTime}"></span>
+</p>
+
+<p>
+    information on whether your code has been verified: , <span th:text="${tokenVerify}">true</span>
+</p>
+    Regards, <br/>
+    <em>Hasan Cagri Yanbal</em>
+</p>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.taskmanagement.dto.request;
 
+import com.example.taskmanagement.model.enums.UserStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
