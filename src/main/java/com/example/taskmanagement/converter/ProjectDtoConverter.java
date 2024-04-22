@@ -1,37 +1,35 @@
 package com.example.taskmanagement.converter;
 
-import com.example.taskmanagement.dto.response.ProjectDto;
-import com.example.taskmanagement.dto.response.TaskDto;
+import com.example.taskmanagement.dto.response.ProjectResponseDto;
+import com.example.taskmanagement.dto.response.TaskResponseDto;
 import com.example.taskmanagement.model.entity.Project;
-import com.example.taskmanagement.model.entity.Task;
 import lombok.AllArgsConstructor;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class ProjectDtoConverter implements Converter<Project, ProjectDto> {
+public class ProjectDtoConverter implements Converter<Project, ProjectResponseDto> {
     private TaskDtoConverter taskDtoConverter;
 
     @Override
-    public ProjectDto convert(MappingContext<Project, ProjectDto> context) {
+    public ProjectResponseDto convert(MappingContext<Project, ProjectResponseDto> context) {
         return convert(context.getSource());
     }
 
-    public ProjectDto convert(Project project) {
-        ProjectDto projectDto = new ProjectDto();
+    public ProjectResponseDto convert(Project project) {
+        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
         if (project.getTaskList() != null){
-            List<TaskDto> taskDtoList = project.getTaskList().stream().map(taskDtoConverter :: convert).collect(Collectors.toList());
-            projectDto.setTaskDtoList(taskDtoList);
+            List<TaskResponseDto> taskResponseDtoList = project.getTaskList().stream().map(taskDtoConverter :: convert).collect(Collectors.toList());
+            projectResponseDto.setTaskResponseDtoList(taskResponseDtoList);
         }
-        else projectDto.setTaskDtoList(null);
-        projectDto.setName(project.getName());
+        else projectResponseDto.setTaskResponseDtoList(null);
+        projectResponseDto.setName(project.getName());
        // projectDto.setCreatedBy(project.getCreatedBy());
-        return projectDto;
+        return projectResponseDto;
     }
 }

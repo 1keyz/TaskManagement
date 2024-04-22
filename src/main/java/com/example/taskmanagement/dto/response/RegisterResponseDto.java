@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RegisterResponse {
-    private UserDto userDto;
+public class RegisterResponseDto {
+    private UserResponseDto userResponseDto;
 }

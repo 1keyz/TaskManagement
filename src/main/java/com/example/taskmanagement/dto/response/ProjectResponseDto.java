@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProjectDto {
+public class ProjectResponseDto {
     private String name;
     //private long createdBy;
-    private List<TaskDto> taskDtoList;
+    private List<TaskResponseDto> taskResponseDtoList;
 }

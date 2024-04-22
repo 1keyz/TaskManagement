@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserVerificationController {
 
-    private final UserVerificationService service;
+    private final UserVerificationService userVerificationService;
 
 
     @GetMapping
     public ResponseEntity<UserVerificationDto> verify(@RequestBody VerifyUserRequest request) {
         UserVerificationDto userVerificationDto = new UserVerificationDto();
-        userVerificationDto.setVerify(service.verify(request));
+        userVerificationDto.setVerified(userVerificationService.verify(request));
         return ResponseEntity.ok(userVerificationDto);
     }
 }

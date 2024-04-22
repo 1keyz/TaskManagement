@@ -1,7 +1,6 @@
 package com.example.taskmanagement.converter;
 
 import com.example.taskmanagement.dto.response.UserVerificationDto;
-import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.model.entity.UserVerification;
 import com.example.taskmanagement.service.mappers.UserVerificationMapper;
 import org.modelmapper.Converter;
@@ -27,8 +26,8 @@ public class UserVerificationDtoConverter implements Converter<UserVerification,
     }
 
     public UserVerificationDto convert(UserVerification userVerification) {
-        UserVerificationDto userVerificationDto = UserVerificationMapper
-                .INSTANCE.UserVerificationDtoFromUserVerification(userVerification);
+        UserVerificationDto userVerificationDto = UserVerificationMapper.INSTANCE
+                .UserVerificationDtoFromUserVerification(userVerification);
         return userVerificationDto;
     }
 

@@ -1,6 +1,6 @@
 package com.example.taskmanagement.service.impl;
 
-import com.example.taskmanagement.dto.response.UserDto;
+import com.example.taskmanagement.dto.response.UserResponseDto;
 import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.repository.UserRepository;
 import com.example.taskmanagement.service.abstracts.UserService;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserDetailsById(long id) {
-        return mapper.map(repository.getById(id),UserDto.class);
+    public UserResponseDto getUserDetailsById(long id) {
+        return mapper.map(repository.getById(id), UserResponseDto.class);
     }
 }

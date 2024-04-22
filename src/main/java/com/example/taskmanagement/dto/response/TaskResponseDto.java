@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TaskDto {
+public class TaskResponseDto {
     private String name;
     private String description;
     private TaskStatus status;
     private TaskProjectDto taskProjectDto;
-    private UserDto assignUser;
+    private UserResponseDto assignUser;
 
 }

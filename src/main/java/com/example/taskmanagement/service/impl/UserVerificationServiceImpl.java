@@ -27,7 +27,6 @@ public class UserVerificationServiceImpl implements UserVerificationService {
     @Override
     public UserVerification createCode( User user) {
         UserVerification userVerification = new UserVerification();
-        user.setUserStatus(UserStatus.WAITING_FOR_VERIFICATION);
         userVerification.setUserl(user);
         userVerification.setCode(randomCode());
         userVerification.setExpirationTime(LocalDateTime.now().plus(6, ChronoUnit.MINUTES));
@@ -46,13 +45,6 @@ public class UserVerificationServiceImpl implements UserVerificationService {
         }
 
         return userVerification;
-    }
-
-    public String createCodeForLogin(){
-        UserVerification userVerification = repository.getById(20l);
-        userVerification.setCode(randomCode());
-        repository.save(userVerification);
-        return userVerification.getCode();
     }
 
     @Override
@@ -77,11 +69,10 @@ public class UserVerificationServiceImpl implements UserVerificationService {
                 .properties(getProperties(lastUserVerification))
                 .build();
         try {
-            emailService.verifyTokenMail(mail);
+            emailService.sendVerifiedMail(mail);
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
         repository.save(lastUserVerification);
         return true;
     }
@@ -101,7 +92,7 @@ public class UserVerificationServiceImpl implements UserVerificationService {
         StringBuilder code = new StringBuilder();
         Random random = new Random();
         for (int i = 0 ; i < rndmStr.length();i++){
-            code.append(rndmStr.charAt(random.nextInt(48)));
+            code.append(rndmStr.charAt(random.nextInt(47)));
             if (code.length() ==6){
                 break;
             }

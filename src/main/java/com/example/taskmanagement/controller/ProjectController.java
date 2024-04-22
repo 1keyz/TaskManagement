@@ -2,10 +2,8 @@ package com.example.taskmanagement.controller;
 
 import com.example.taskmanagement.dto.request.ProjectRequestDto;
 import com.example.taskmanagement.dto.request.ProjectUpdateRequest;
-import com.example.taskmanagement.dto.response.ProjectDto;
+import com.example.taskmanagement.dto.response.ProjectResponseDto;
 import com.example.taskmanagement.service.abstracts.ProjectService;
-import com.example.taskmanagement.service.impl.ProjectServiceImpl;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ public class ProjectController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectRequestDto projectRequestDto) {
+    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequestDto) {
        return ResponseEntity.ok(projectService.createProject(projectRequestDto));
     }
 
@@ -31,12 +29,12 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectDto> updateProject(@RequestParam long id , @RequestBody ProjectUpdateRequest updateRequest) {
+    public ResponseEntity<ProjectResponseDto> updateProject(@RequestParam long id , @RequestBody ProjectUpdateRequest updateRequest) {
        return ResponseEntity.ok(projectService.updateProject(id,updateRequest));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectDto> getProjectById(@PathVariable long id){
+    public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable long id){
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
 }

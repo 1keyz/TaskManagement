@@ -3,7 +3,7 @@ package com.example.taskmanagement.service.impl;
 import com.example.taskmanagement.dto.request.AssignTaskToProjectRequest;
 import com.example.taskmanagement.dto.request.TaskRequestDto;
 import com.example.taskmanagement.dto.request.TaskUpdateRequestDto;
-import com.example.taskmanagement.dto.response.TaskDto;
+import com.example.taskmanagement.dto.response.TaskResponseDto;
 import com.example.taskmanagement.exception.NotFoundException;
 import com.example.taskmanagement.model.entity.Task;
 import com.example.taskmanagement.repository.TaskRepository;
@@ -34,13 +34,13 @@ public class TaskServiceImpl implements TaskService {
         this.userService = userService;
     }
 
-    public TaskDto addProjectToTask(AssignTaskToProjectRequest request){
+    public TaskResponseDto addProjectToTask(AssignTaskToProjectRequest request){
         Task task = findByTaskWithId(request.getTaskId());
         task.setAssignedProject(projectService.findByProjectId(request.getProjectId()));
         task.setUpdatedAt(LocalDateTime.now());
-        return modelMapper.map(taskRepository.save(task),TaskDto.class);
+        return modelMapper.map(taskRepository.save(task), TaskResponseDto.class);
     }
-    public TaskDto create(TaskRequestDto requestDto){
+    public TaskResponseDto create(TaskRequestDto requestDto){
         Task task = Task.builder()
                 .name(requestDto.getName())
                 .description(requestDto.getDescription())
@@ -52,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
             task.setAssignedProject(projectService.findByProjectId(requestDto.getProjectId()));
         }
         taskRepository.save(task);
-        return modelMapper.map(task,TaskDto.class);
+        return modelMapper.map(task, TaskResponseDto.class);
     }
 
     public Task createTask(TaskRequestDto requestDto){
@@ -66,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto update(long id ,TaskUpdateRequestDto updateRequestDto) {
+    public TaskResponseDto update(long id , TaskUpdateRequestDto updateRequestDto) {
         //Task task = findByTaskWithId(id);
 
         Task task = findByTaskWithId(id);
@@ -74,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
         task.setStatus(updateRequestDto.getStatus());
 
         taskRepository.save(task);
-        return modelMapper.map(task,TaskDto.class);
+        return modelMapper.map(task, TaskResponseDto.class);
     }
 
     @Override
@@ -91,19 +91,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getTaskByProjectId(long projectId) {
+    public List<TaskResponseDto> getTaskByProjectId(long projectId) {
         List<Task> taskList = taskRepository.getTaskByProjectId(projectId);
-        List<TaskDto> taskDtoList = taskList.stream()
-                .map(x -> modelMapper.map(x, TaskDto.class))
+        List<TaskResponseDto> taskResponseDtoList = taskList.stream()
+                .map(x -> modelMapper.map(x, TaskResponseDto.class))
                 .collect(Collectors.toList());
-        return taskDtoList;
+        return taskResponseDtoList;
     }
 
     @Override
-    public TaskDto assignUserToTask(long id ,long userId) {
+    public TaskResponseDto assignUserToTask(long id , long userId) {
         Task task = taskRepository.getById(id);
         task.setAssignedUser(userService.getById(userId));
-        return modelMapper.map(task,TaskDto.class);
+        return modelMapper.map(task, TaskResponseDto.class);
     }
 
     protected Task findByTaskWithId(long id){

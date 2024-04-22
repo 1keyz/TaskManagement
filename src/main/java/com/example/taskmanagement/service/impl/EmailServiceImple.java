@@ -1,13 +1,11 @@
 package com.example.taskmanagement.service.impl;
 
 
-import com.example.taskmanagement.dto.response.MailResponse;
 import com.example.taskmanagement.model.entity.Mail;
 import com.example.taskmanagement.service.abstracts.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -28,7 +26,7 @@ public class EmailServiceImple implements EmailService {
     }
 
 
-    public void verifyTokenMail(Mail mail) throws Exception {
+    public void sendVerifiedMail(Mail mail) throws Exception {
         sendMail(mail);
         mail.setVerify(true);
     }

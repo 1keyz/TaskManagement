@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class LoginDto {
+public class LoginResponseDto {
     private String email;
     private String message;
-    private String code;
 }

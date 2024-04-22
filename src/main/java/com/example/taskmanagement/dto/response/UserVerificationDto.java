@@ -10,5 +10,5 @@ import java.time.LocalDateTime;
 public class UserVerificationDto {
     private String code;
     private LocalDateTime expirationTime;
-    private boolean verify;
+    private boolean verified;
 }

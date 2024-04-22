@@ -7,6 +7,6 @@ import com.example.taskmanagement.model.entity.UserVerification;
 public interface UserVerificationService {
     UserVerification createCode(User user);
     boolean verify(VerifyUserRequest request);
-    String createCodeForLogin();
+
 
 }

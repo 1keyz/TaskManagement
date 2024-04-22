@@ -1,6 +1,6 @@
 package com.example.taskmanagement.controller;
 
-import com.example.taskmanagement.dto.response.UserDto;
+import com.example.taskmanagement.dto.response.UserResponseDto;
 import com.example.taskmanagement.service.abstracts.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable long id){
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable long id){
         return ResponseEntity.ok(userService.getUserDetailsById(id));
     }
 }

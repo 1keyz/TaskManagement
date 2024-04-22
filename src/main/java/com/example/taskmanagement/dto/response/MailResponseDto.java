@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailResponse {
+public class MailResponseDto {
     private String message;
-    private boolean verify;
+    private boolean verified;
 }
