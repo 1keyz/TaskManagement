@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.Map;
+
 
 @Service
 @AllArgsConstructor
@@ -41,8 +43,7 @@ public class EmailServiceImple implements EmailService {
         mimeMessageHelper.setSubject(mail.getSubject());
 
 
-        Context context = new Context();
-        context.setVariables(mail.getProperties());
+        Context context = getHtmlContent(mail.getProperties());
         String processedString = templateEngine.process("email-template.html", context);
 
         mimeMessageHelper.setText(processedString, true);
@@ -50,11 +51,10 @@ public class EmailServiceImple implements EmailService {
         sender.send(mimeMessage);
     }
 
-    private String getHtmlContent(String name , String value) { // content'i buraya uyarlayacam ilerde
+    private Context getHtmlContent(Map<String,Object> properties) { // content'i buraya uyarlayacam ilerde
         Context context = new Context();
-        context.setVariable("content", "tokeniniz üretildi");
-        String processedString = templateEngine.process("email-template.html", context);
-        return processedString;
+        context.setVariables(properties);
+        return context;
     }
 
 }

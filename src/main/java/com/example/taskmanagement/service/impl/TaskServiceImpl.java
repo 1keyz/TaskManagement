@@ -55,15 +55,6 @@ public class TaskServiceImpl implements TaskService {
         return modelMapper.map(task, TaskResponseDto.class);
     }
 
-    public Task createTask(TaskRequestDto requestDto){
-        Task task = Task.builder()
-                .name(requestDto.getName())
-                .description(requestDto.getDescription())
-                .status(requestDto.getStatus())
-                .build();
-        task.setCreatedAt(LocalDateTime.now());
-        return taskRepository.save(task);
-    }
 
     @Override
     public TaskResponseDto update(long id , TaskUpdateRequestDto updateRequestDto) {
@@ -100,7 +91,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDto assignUserToTask(long id , long userId) {
+    public TaskResponseDto assignedUserToTask(long id , long userId) {
         Task task = taskRepository.getById(id);
         task.setAssignedUser(userService.getById(userId));
         return modelMapper.map(task, TaskResponseDto.class);

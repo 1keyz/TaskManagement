@@ -15,7 +15,7 @@ public interface TaskService {
     void delete(long id);
     List<Task> getAll();
     List<TaskResponseDto> getTaskByProjectId(long projectId);
-    TaskResponseDto assignUserToTask(long id, long userId);
+    TaskResponseDto assignedUserToTask(long id, long userId);
     //Task findByTaskWithId(long id);
     // Task update(Task task);
 }

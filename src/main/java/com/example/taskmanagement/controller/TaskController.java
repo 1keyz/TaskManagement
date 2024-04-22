@@ -48,6 +48,6 @@ public class TaskController {
 
     @PutMapping("/{idd}")
     public ResponseEntity<TaskResponseDto> assignUserToTask(@PathVariable long idd , long userId){
-        return ResponseEntity.ok(taskService.assignUserToTask(idd,userId));
+        return ResponseEntity.ok(taskService.assignedUserToTask(idd,userId));
     }
 }
