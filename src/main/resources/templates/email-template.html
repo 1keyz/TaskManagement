@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" , content="text/html" charset="UTF-8">
+</head>
+    <p>
+        kullanici kodunuz : <span th:text="${codes}"></span>
+    </p>
+
+    <p>
+        kodunuz olusturuldu ve kod olusturma tarihiniz : <span th:text="${tokenCreateDate}"></span>
+    </p>
+
+    <p>
+        olusturulan kodun bitis tarihi :<span th:text="${tokenExpirationTime}"></span>
+    </p>
+</html>

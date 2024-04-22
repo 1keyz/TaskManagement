@@ -1,19 +1,19 @@
 package com.example.taskmanagement.dto.response;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class UserResponseDto {
     private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
+    private List<UserVerificationDto> userVerification;
 }

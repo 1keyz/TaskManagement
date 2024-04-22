@@ -39,4 +39,8 @@ public class User extends AbstractDateModel {
     @Column(name = "user_status")
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
+
+    @OneToMany(mappedBy = "userl" , fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    @Column(name = "user_verifications")
+    private List<UserVerification> userVerification;
 }
