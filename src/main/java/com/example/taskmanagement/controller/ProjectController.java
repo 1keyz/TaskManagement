@@ -4,6 +4,7 @@ import com.example.taskmanagement.dto.request.ProjectRequestDto;
 import com.example.taskmanagement.dto.request.ProjectUpdateRequest;
 import com.example.taskmanagement.dto.response.ProjectResponseDto;
 import com.example.taskmanagement.service.abstracts.ProjectService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class ProjectController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequestDto) {
+    public ResponseEntity<ProjectResponseDto> createProject(@Valid @RequestBody ProjectRequestDto projectRequestDto) {
        return ResponseEntity.ok(projectService.createProject(projectRequestDto));
     }
 
@@ -29,7 +30,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> updateProject(@RequestParam long id , @RequestBody ProjectUpdateRequest updateRequest) {
+    public ResponseEntity<ProjectResponseDto> updateProject(@RequestParam long id , @Valid @RequestBody ProjectUpdateRequest updateRequest) {
        return ResponseEntity.ok(projectService.updateProject(id,updateRequest));
     }
 

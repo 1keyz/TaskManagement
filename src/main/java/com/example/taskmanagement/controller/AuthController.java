@@ -7,6 +7,7 @@ import com.example.taskmanagement.dto.response.LoginResponseDto;
 import com.example.taskmanagement.dto.response.RegisterResponseDto;
 import com.example.taskmanagement.security.helper.TokenHelper;
 import com.example.taskmanagement.service.abstracts.AuthService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,12 @@ public class AuthController {
     private TokenHelper tokenHelper;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto requestDto) {
+    public ResponseEntity<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto requestDto) {
         return ResponseEntity.ok(service.register(requestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto requestDto) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto) {
         String token = tokenHelper.generateToken(requestDto.getEmail());
         log.info(token);
         return ResponseEntity.ok(service.login(requestDto));
