@@ -39,7 +39,7 @@ public class UserVerificationServiceImpl implements UserVerificationService {
                 .properties(getProperties(userVerification))
                 .build();
         try {
-            emailService.createTokenMail(mail);
+            emailService.sendUserVerificationMail(mail);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

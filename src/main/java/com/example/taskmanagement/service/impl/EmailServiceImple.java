@@ -23,7 +23,7 @@ public class EmailServiceImple implements EmailService {
     private JavaMailSender sender;
     private TemplateEngine templateEngine;
 
-    public void createTokenMail(Mail mail) throws Exception {
+    public void sendUserVerificationMail(Mail mail) throws Exception {
         sendMail(mail);
     }
 
