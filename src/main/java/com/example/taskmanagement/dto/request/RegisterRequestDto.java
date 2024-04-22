@@ -14,15 +14,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequestDto {
-    @NotBlank(message = "firstname boş olamaz!")
+    @NotBlank(message = "Ad boş olamaz!")
     private String firstName;
-    @NotBlank(message = "lastname boş olamaz!")
+    @NotBlank(message = "Soyad boş olamaz!")
     private String lastName;
-    @NotBlank(message = "email boş olamaz!")
-    @Email(message = "örnek : user@host.com")
+    @NotBlank(message = "Email boş olamaz!")
+    @Email(message = "Email formata uymuyor : user@host.com")
     private String email;
-    @NotBlank(message = "password boş olamaz!")
-    @Size(min = 6,max = 10 , message = "şifre uzunluğu 6 ile 10 karakter arasında olmalıdır!")
+    @NotBlank(message = "Şifre boş olamaz!")
+    @Size(min = 6,max = 10 , message = "Şifre uzunluğu 6 ile 10 karakter arasında olmalıdır!")
     private String password;
     private String phoneNumber;
 }

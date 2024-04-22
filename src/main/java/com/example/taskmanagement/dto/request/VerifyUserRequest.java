@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class VerifyUserRequest {
-    @NotBlank(message = "User id boş olamaz!")
+    @NotBlank(message = "Kullanıcı id boş olamaz!")
     private long userId;
-    @NotBlank(message = "code boş olamaz!")
+    @NotBlank(message = "Kod boş olamaz!")
     private String code;
 }

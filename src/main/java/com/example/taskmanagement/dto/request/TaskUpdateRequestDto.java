@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class TaskUpdateRequestDto {
-    @NotBlank(message = "Task status boş olamaz!")
+    @NotBlank(message = "Görev durumu boş olamaz!")
     private TaskStatus status;
 }
