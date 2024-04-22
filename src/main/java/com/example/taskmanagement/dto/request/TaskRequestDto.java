@@ -11,13 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskRequestDto {
-    @NotBlank(message = "Task ismi boş olamaz..!")
+    @NotBlank(message = "Task ismi boş olamaz!")
     private String name;
     private String description;
-    @NotBlank(message = "Task status boş olamaz..!")
+    @NotBlank(message = "Task status boş olamaz!")
     private TaskStatus status;
-    @NotBlank(message = "Proje ismi boş olamaz..!")
+    @NotBlank(message = "Proje ismi boş olamaz!")
     private long projectId;
-    @NotNull(message = "Task üretici boş olamaz..!")
     private long userId;
 }

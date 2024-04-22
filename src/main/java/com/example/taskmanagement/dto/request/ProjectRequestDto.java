@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class ProjectRequestDto {
-    @NotBlank(message = "Proje ismi boş olamaz..!")
+    @NotBlank(message = "Proje ismi boş olamaz!")
     private String name;
     //private Long createdBy;
 }

@@ -13,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequestDto {
-    @NotBlank(message = "Email boş olamaz..!")
+    @NotBlank(message = "Email boş olamaz!")
     @Email(message = "örnek : user@host.com")
     private String email;
-    @NotBlank(message = "Password boş olamaz..!")
+    @NotBlank(message = "Password boş olamaz!")
     private String password;
 }
