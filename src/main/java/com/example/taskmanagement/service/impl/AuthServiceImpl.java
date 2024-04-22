@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User getCurrentUser() {
+    public User getCurrentUser() { // authanticated olmuş kullanıcıyı çektiğimiz method şu anlık sadece createdByProject kısmında createdBy'ı setlemek için kullanıyorum
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object ob = authentication.getPrincipal();
         if (authentication != null && authentication.isAuthenticated()){

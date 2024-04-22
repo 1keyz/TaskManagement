@@ -6,6 +6,7 @@ import com.example.taskmanagement.dto.request.TaskUpdateRequestDto;
 import com.example.taskmanagement.dto.response.TaskResponseDto;
 import com.example.taskmanagement.service.abstracts.TaskService;
 import com.example.taskmanagement.service.impl.TaskServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +24,11 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TaskResponseDto> create(@RequestBody TaskRequestDto requestDto){
+    public ResponseEntity<TaskResponseDto> create(@Valid @RequestBody TaskRequestDto requestDto){
        return ResponseEntity.ok(taskService.create(requestDto));
     }
     @PutMapping("/{ids}")
-    public ResponseEntity<TaskResponseDto> update(@PathVariable long ids , @RequestBody TaskUpdateRequestDto requestDto){
+    public ResponseEntity<TaskResponseDto> update(@PathVariable long ids ,@Valid @RequestBody TaskUpdateRequestDto requestDto){
         return ResponseEntity.ok(taskService.update(ids,requestDto));
     }
 
