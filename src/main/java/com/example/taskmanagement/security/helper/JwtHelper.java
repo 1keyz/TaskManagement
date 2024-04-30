@@ -55,7 +55,7 @@ public class JwtHelper implements TokenHelper{
                 .setIssuedAt(new Date(System.currentTimeMillis())) // tokenın oluşturulduğu zaman
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * TOKEN_MINUTE )) // tokenin ne kadar kullanılabilir olacağı
                 .signWith(getSignKey(), SignatureAlgorithm.HS256) // imza anahtarını belirlediğimiz kısım
-                .compact(); // Jwt'yi string olarak döndürüyor
+                .compact(); // Jwt'yi string olarak döndürüyo
     }
 
     public Key getSignKey(){ // imza anahtarını hazırladığımız method

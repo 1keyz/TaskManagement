@@ -1,5 +1,6 @@
 package com.example.taskmanagement.model.entity;
 
+import com.example.taskmanagement.model.enums.ErrorEnum;
 import com.example.taskmanagement.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,4 +44,5 @@ public class User extends AbstractDateModel {
     @OneToMany(mappedBy = "userl" , fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     @Column(name = "user_verifications")
     private List<UserVerification> userVerification;
+
 }

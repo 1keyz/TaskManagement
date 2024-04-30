@@ -1,9 +1,8 @@
 package com.example.taskmanagement.core.utils.exception.problemdetails;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -12,9 +11,10 @@ import java.util.List;
 public class ValidationProblemDetail extends ProblemDetails{
     private List<String> errors;
 
-    public ValidationProblemDetail(List<String> errors) {
+    public ValidationProblemDetail(List<String> errors , HttpStatus status) {
+        setStatus(status);
         setTitle("Validation rule Violation");
-        setType("ValidationException");
+        setCode(status.value());
         setDetail("one or more validation error(s)!");
         this.errors = errors;
     }

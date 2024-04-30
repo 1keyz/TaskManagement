@@ -1,13 +1,17 @@
 package com.example.taskmanagement.security;
 
+import com.example.taskmanagement.core.utils.exception.types.CustomAuthenticationException;
 import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.security.helper.TokenHelper;
 import com.example.taskmanagement.service.abstracts.UserService;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,18 +39,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-
         final String autHeader = request.getHeader("Authorization");
+
         String token = null;
-        String email  = null;
+        String email;
 
         if (autHeader != null){
             token = autHeader.substring(7);
         }
 
-
         if (token != null){
-            email = tokenHelper.extractUser(token);
+            try {
+                email = tokenHelper.extractUser(token);
+            }catch (JwtException ex){
+                throw new CustomAuthenticationException("Acces denied");
+            }
+
+
             if (email != null){
                 User user = userService.getByEmail(email);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
