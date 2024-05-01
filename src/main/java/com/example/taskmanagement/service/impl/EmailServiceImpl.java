@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
-public class EmailServiceImple implements EmailService {
+public class EmailServiceImpl implements EmailService {
 
     private JavaMailSender sender;
     private TemplateEngine templateEngine;

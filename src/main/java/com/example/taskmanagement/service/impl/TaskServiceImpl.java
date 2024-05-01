@@ -98,6 +98,6 @@ public class TaskServiceImpl implements TaskService {
 
     protected Task findByTaskWithId(long id){
         return taskRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Task not found"));
+                new NotFoundException("project not found with id : %s".formatted(id)));
     }
 }

@@ -8,10 +8,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ValidationProblemDetail extends ProblemDetails{
+public class ValidationProblemErrorResponse extends ErrorResponse {
     private List<String> errors;
 
-    public ValidationProblemDetail(List<String> errors , HttpStatus status) {
+    public ValidationProblemErrorResponse(List<String> errors , HttpStatus status) {
         setStatus(status);
         setTitle("Validation rule Violation");
         setCode(status.value());

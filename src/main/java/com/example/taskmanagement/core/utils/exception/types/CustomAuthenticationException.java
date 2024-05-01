@@ -1,9 +1,7 @@
 package com.example.taskmanagement.core.utils.exception.types;
 
 
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-
-public class CustomAuthenticationException extends InsufficientAuthenticationException {
+public class CustomAuthenticationException extends org.springframework.security.core.AuthenticationException{
     public CustomAuthenticationException(String msg) {
         super(msg);
     }

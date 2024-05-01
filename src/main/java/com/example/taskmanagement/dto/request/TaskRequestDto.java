@@ -14,9 +14,9 @@ public class TaskRequestDto {
     @NotBlank(message = "Görev ismi boş olamaz!")
     private String name;
     private String description;
-    @NotBlank(message = "Görev durumu boş olamaz!")
+    @NotNull(message = "Görev durumu boş olamaz!")
     private TaskStatus status;
-    @NotBlank(message = "Proje ismi boş olamaz!")
+    @NotNull(message = "Proje ismi boş olamaz!")
     private long projectId;
     private long userId;
 }

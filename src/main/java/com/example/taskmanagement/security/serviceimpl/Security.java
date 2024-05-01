@@ -1,4 +1,4 @@
-package com.example.taskmanagement.security.serviceimple;
+package com.example.taskmanagement.security.serviceimpl;
 
 
 import com.example.taskmanagement.security.JwtAuthenticationFilter;
@@ -25,9 +25,13 @@ public class Security {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
        return http
                 .csrf(AbstractHttpConfigurer :: disable)
-               .exceptionHandling(exc -> exc.authenticationEntryPoint(entryPoint))
+              .exceptionHandling(exc -> exc.authenticationEntryPoint(entryPoint))
                .authorizeHttpRequests(x ->
-                        x.requestMatchers("/auth/register","/auth/login").permitAll().anyRequest().authenticated())
+                        x
+                                .requestMatchers("/auth/register","/auth/login", "/error")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated())
                .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                .build();

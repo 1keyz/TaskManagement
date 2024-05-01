@@ -41,8 +41,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponseDto updateProject(long id , ProjectUpdateRequest updateRequest) {
-        Project project = findByProjectId(id);
+    public ProjectResponseDto updateProject( ProjectUpdateRequest updateRequest) {
+        Project project = findByProjectId(updateRequest.getId());
         project.setName(updateRequest.getName());
         project.setUpdatedAt(LocalDateTime.now());
         return mapper.map(projectRepository.save(project), ProjectResponseDto.class);
@@ -62,6 +62,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project findByProjectId(long id) {
         return projectRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("project not found"));
+                .orElseThrow(() -> new NotFoundException("project not found with id : %s".formatted(id)));
     }
 }

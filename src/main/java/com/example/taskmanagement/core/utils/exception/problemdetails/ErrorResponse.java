@@ -1,6 +1,5 @@
 package com.example.taskmanagement.core.utils.exception.problemdetails;
 
-import com.example.taskmanagement.model.enums.ErrorEnum;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
@@ -8,12 +7,11 @@ import org.springframework.http.HttpStatus;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProblemDetails {
+@Builder
+public class ErrorResponse {
     private HttpStatus status;
     private String errorEnum;
     private String title;
     private String detail;
     private int code;
-
-
 }

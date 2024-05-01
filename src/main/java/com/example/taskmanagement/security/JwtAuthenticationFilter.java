@@ -3,15 +3,14 @@ package com.example.taskmanagement.security;
 import com.example.taskmanagement.core.utils.exception.types.CustomAuthenticationException;
 import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.security.helper.TokenHelper;
+import com.example.taskmanagement.security.serviceimpl.DelegatedAuthenticationEntryPoint;
 import com.example.taskmanagement.service.abstracts.UserService;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,15 +22,16 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private TokenHelper tokenHelper;
-    private  UserDetailsService userDetailsService;
-    private  UserService userService;
-
-    public JwtAuthenticationFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService, UserService userService) {
+    private UserDetailsService userDetailsService;
+    private UserService userService;
+    private DelegatedAuthenticationEntryPoint entryPoint;
+    public JwtAuthenticationFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService, UserService userService, DelegatedAuthenticationEntryPoint entryPoint) {
         this.tokenHelper = tokenHelper;
         this.userDetailsService = userDetailsService;
         this.userService = userService;
 
-  
+
+        this.entryPoint = entryPoint;
     }
 
     @Override
@@ -54,11 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }catch (JwtException ex){
                 throw new CustomAuthenticationException("Acces denied");
             }
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-
-            if (email != null){
+            if (tokenHelper.validateToken(token,userDetails)){
                 User user = userService.getByEmail(email);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         user.getEmail(),user.getPassword(),userDetails.getAuthorities()

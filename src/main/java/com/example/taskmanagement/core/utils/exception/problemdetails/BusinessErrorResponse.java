@@ -1,13 +1,13 @@
 package com.example.taskmanagement.core.utils.exception.problemdetails;
 
-import com.example.taskmanagement.model.enums.ErrorEnum;
+import com.example.taskmanagement.model.enums.ErrorCodeEnum;
 import org.springframework.http.HttpStatus;
 
-public class BusinessProblemDetail extends ProblemDetails{
-    public BusinessProblemDetail(HttpStatus status , String detail) {
+public class BusinessErrorResponse extends ErrorResponse {
+    public BusinessErrorResponse(HttpStatus status , String detail) {
         setStatus(status);
         setTitle("Business Rule Violation");
-        setErrorEnum(ErrorEnum.GENERAL.getErrorValue());
+        setErrorEnum(ErrorCodeEnum.GENERAL.getErrorValue());
         setCode(status.value());
         setDetail(detail);
     }

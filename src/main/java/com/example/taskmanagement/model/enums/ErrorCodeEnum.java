@@ -3,11 +3,10 @@ package com.example.taskmanagement.model.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum ErrorEnum {
+public enum ErrorCodeEnum {
     GENERAL("HY001",HttpStatus.BAD_REQUEST),
     USER_BLOCKED("HY002",HttpStatus.UNAUTHORIZED),
     NOT_FOUND("HY003", HttpStatus.NOT_FOUND),
@@ -16,7 +15,7 @@ public enum ErrorEnum {
     private String errorValue;
     private HttpStatus status;
 
-    ErrorEnum(String errorValue, HttpStatus status) {
+    ErrorCodeEnum(String errorValue, HttpStatus status) {
         this.errorValue = errorValue;
         this.status = status;
     }
@@ -25,8 +24,8 @@ public enum ErrorEnum {
         return errorValue;
     }
     @JsonCreator
-    public static ErrorEnum fromValue(String value) {
-        for (ErrorEnum error : ErrorEnum.values()) {
+    public static ErrorCodeEnum fromValue(String value) {
+        for (ErrorCodeEnum error : ErrorCodeEnum.values()) {
             if (error.errorValue == value) {
                 return error;
             }
