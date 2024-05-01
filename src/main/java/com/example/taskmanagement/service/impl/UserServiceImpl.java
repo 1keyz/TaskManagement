@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public User getByEmail(String email) {
-        return repository.findByEmail(email);
+        return repository.findUserByEmail(email);
     }
 
     public User getById(long id){

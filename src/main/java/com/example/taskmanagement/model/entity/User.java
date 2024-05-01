@@ -3,13 +3,8 @@ package com.example.taskmanagement.model.entity;
 import com.example.taskmanagement.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -43,4 +38,5 @@ public class User extends AbstractDateModel {
     @OneToMany(mappedBy = "userl" , fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     @Column(name = "user_verifications")
     private List<UserVerification> userVerification;
+
 }

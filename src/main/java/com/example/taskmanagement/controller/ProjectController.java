@@ -29,9 +29,9 @@ public class ProjectController {
         log.info("project deleted");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> updateProject(@RequestParam long id , @Valid @RequestBody ProjectUpdateRequest updateRequest) {
-       return ResponseEntity.ok(projectService.updateProject(id,updateRequest));
+    @PutMapping()
+    public ResponseEntity<ProjectResponseDto> updateProject(@Valid @RequestBody ProjectUpdateRequest updateRequest) {
+       return ResponseEntity.ok(projectService.updateProject(updateRequest));
     }
 
     @GetMapping("/{id}")

@@ -8,7 +8,7 @@ import com.example.taskmanagement.model.entity.Project;
 public interface ProjectService {
     ProjectResponseDto createProject(ProjectRequestDto projectRequestDto);
     void deleteProject(long id);
-    ProjectResponseDto updateProject(long id , ProjectUpdateRequest updateRequest);
+    ProjectResponseDto updateProject( ProjectUpdateRequest updateRequest);
 
     ProjectResponseDto getProjectById(long id);
     Project findByProjectId(long id);

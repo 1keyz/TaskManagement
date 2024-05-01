@@ -1,4 +1,4 @@
-package com.example.taskmanagement.security.serviceimple;
+package com.example.taskmanagement.security.serviceimpl;
 
 import com.example.taskmanagement.model.entity.User;
 import com.example.taskmanagement.security.CustomerUserDetails;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class UserDetailsServiceImple implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private UserService userService;
 
-    public UserDetailsServiceImple(UserService userService) {
+    public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
     }
 

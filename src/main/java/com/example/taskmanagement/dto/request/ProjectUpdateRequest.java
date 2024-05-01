@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ProjectUpdateRequest {
+    private long id;
     @NotNull(message = "Proje ismi bos olamaz!")
     private String name;
 }

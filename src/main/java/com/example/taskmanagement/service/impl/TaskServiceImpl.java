@@ -1,10 +1,10 @@
 package com.example.taskmanagement.service.impl;
 
+import com.example.taskmanagement.core.utils.exception.types.NotFoundException;
 import com.example.taskmanagement.dto.request.AssignTaskToProjectRequest;
 import com.example.taskmanagement.dto.request.TaskRequestDto;
 import com.example.taskmanagement.dto.request.TaskUpdateRequestDto;
 import com.example.taskmanagement.dto.response.TaskResponseDto;
-import com.example.taskmanagement.exception.NotFoundException;
 import com.example.taskmanagement.model.entity.Task;
 import com.example.taskmanagement.repository.TaskRepository;
 import com.example.taskmanagement.service.abstracts.ProjectService;
@@ -46,11 +46,10 @@ public class TaskServiceImpl implements TaskService {
                 .description(requestDto.getDescription())
                 .status(requestDto.getStatus())
                 .assignedUser(userService.getById(requestDto.getUserId()))
+                .assignedProject(projectService.findByProjectId(requestDto.getProjectId()))
                 .build();
         task.setCreatedAt(LocalDateTime.now());
-        if (requestDto.getProjectId() != 0){
-            task.setAssignedProject(projectService.findByProjectId(requestDto.getProjectId()));
-        }
+
         taskRepository.save(task);
         return modelMapper.map(task, TaskResponseDto.class);
     }
@@ -99,6 +98,6 @@ public class TaskServiceImpl implements TaskService {
 
     protected Task findByTaskWithId(long id){
         return taskRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Task bulunamadı"));
+                new NotFoundException("project not found with id : %s".formatted(id)));
     }
 }

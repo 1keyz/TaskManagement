@@ -2,6 +2,8 @@ package com.example.taskmanagement.service.impl;
 
 import com.example.taskmanagement.config.PasswordEncoderConfig;
 import com.example.taskmanagement.core.utils.exception.types.BusinessException;
+import com.example.taskmanagement.core.utils.exception.types.NotFoundException;
+import com.example.taskmanagement.core.utils.exception.types.UniqueFieldException;
 import com.example.taskmanagement.dto.request.LoginRequestDto;
 import com.example.taskmanagement.dto.request.RegisterRequestDto;
 import com.example.taskmanagement.dto.response.LoginResponseDto;
@@ -17,6 +19,7 @@ import com.example.taskmanagement.service.mappers.UserMapper;
 import com.example.taskmanagement.service.abstracts.AuthService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,11 @@ public class AuthServiceImpl implements AuthService {
     private UserVerificationService userVerificationService;
     @Override
     public RegisterResponseDto register(RegisterRequestDto requestDto) {
+        try {
+           String email =  repository.findEmailByEmail(requestDto.getEmail());
+        }catch (DataAccessException ex){
+            throw new UniqueFieldException("User email already exists");
+        }
         User user = UserMapper.INSTANCE.UserFromUserRequestDto(requestDto);
         user.setPassword(passwordEncoderConfig.bCryptPasswordEncoder().encode(user.getPassword()));
 
@@ -49,9 +57,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponseDto login(LoginRequestDto requestDto) {
-        User foundUser = repository.findByEmail(requestDto.getEmail());
+        User foundUser = repository.findUserByEmail(requestDto.getEmail());
+        if (foundUser.getUserStatus().equals(UserStatus.BLOCKED)){
+            throw new BusinessException("User is blocked");
+        }
 
-        boolean passwordMatches = passwordEncoderConfig.bCryptPasswordEncoder().matches(requestDto.getPassword(),foundUser.getPassword());
+        boolean passwordMatches = passwordEncoderConfig.bCryptPasswordEncoder()
+                .matches(requestDto.getPassword(),foundUser.getPassword());
+
         if (!passwordMatches){
             throw new BusinessException("Giriş başarısız");
         }
@@ -74,8 +87,17 @@ public class AuthServiceImpl implements AuthService {
         return null;
     }
 
+
     public User findUserById(long id){
         return repository.findById(id).orElseThrow(
-                () -> new BusinessException("user not found"));
+                () -> new NotFoundException("user not found"));
+    }
+
+    public void userIsNotAuthenticated(User user) { // burası şimdilik kalsın user authenticated değilse blocked ayarlaması gibi bir şey
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object ob = authentication.getPrincipal();
+        if (ob.toString().equals(user.getEmail()) && !authentication.isAuthenticated()){
+            user.setUserStatus(UserStatus.BLOCKED);
+        }
     }
 }
