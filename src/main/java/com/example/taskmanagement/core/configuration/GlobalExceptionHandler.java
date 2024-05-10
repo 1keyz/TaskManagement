@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
+import javax.naming.AuthenticationException;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,4 +59,20 @@ public class GlobalExceptionHandler {
         BusinessErrorResponse detail = new BusinessErrorResponse(HttpStatus.BAD_REQUEST,exception.getMessage());
         return detail;
     }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public AuthErrorResponse handleAuthenticationException(Exception ex){
+        AuthErrorResponse response = new AuthErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return response;
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public AccesDeniedErrorResponse handleAccesDeniedException(Exception ex){
+        AccesDeniedErrorResponse response = new AccesDeniedErrorResponse(HttpStatus.BAD_GATEWAY, ex.getMessage());
+        return response;
+    }
+
+
 }

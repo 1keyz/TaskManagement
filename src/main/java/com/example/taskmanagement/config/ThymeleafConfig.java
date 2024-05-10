@@ -36,7 +36,7 @@ public class ThymeleafConfig implements WebMvcConfigurer {
         resolver.setPrefix("templates/"); //  thymeleaf template'in alanını veriyoruz
         resolver.setCacheable(false); // Şablon değişikliklerini kolaylaştırmak için önbelleğin çevrilmesi
         resolver.setSuffix(".html"); // Template dosya uzantısı
-        resolver.setTemplateMode("HTML"); // Template Type
+        resolver.setTemplateMode("HTML"); // Templ"ate Type
         resolver.setCharacterEncoding("UTF-8");
 
         return resolver;

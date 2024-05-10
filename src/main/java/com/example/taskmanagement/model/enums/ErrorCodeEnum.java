@@ -10,7 +10,9 @@ public enum ErrorCodeEnum {
     GENERAL("HY001",HttpStatus.BAD_REQUEST),
     USER_BLOCKED("HY002",HttpStatus.UNAUTHORIZED),
     NOT_FOUND("HY003", HttpStatus.NOT_FOUND),
-    UNIQUE_FIELD("HY004",HttpStatus.CONFLICT);
+    AUTHENTICATION_FAILED("HY004",HttpStatus.UNAUTHORIZED),
+    ACCES_DENIED_FAILED("HY005",HttpStatus.FORBIDDEN),
+    UNIQUE_FIELD("HY006",HttpStatus.CONFLICT);
 
     private String errorValue;
     private HttpStatus status;

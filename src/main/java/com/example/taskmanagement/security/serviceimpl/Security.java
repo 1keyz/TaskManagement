@@ -20,15 +20,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class Security {
     private JwtAuthenticationFilter JwtAuthenticationFilter;
     private DelegatedAuthenticationEntryPoint entryPoint;
+    private CustomAccesDeniedHandler accesDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
        return http
                 .csrf(AbstractHttpConfigurer :: disable)
-              .exceptionHandling(exc -> exc.authenticationEntryPoint(entryPoint))
+              .exceptionHandling(exc -> exc.authenticationEntryPoint(entryPoint).accessDeniedHandler(accesDeniedHandler))
                .authorizeHttpRequests(x ->
                         x
-                                .requestMatchers("/auth/register","/auth/login", "/error")
+                                .requestMatchers("/auth/register","/auth/login")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
